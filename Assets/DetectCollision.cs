@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class DetectCollision : MonoBehaviour {
 
+    int score;
+    int nbCoinsCollectedPerLevel;
+
 	// Use this for initialization
     void Start () {
-	    
+        nbCoinsCollectedPerLevel = 0;
     }
 	
 	// Update is called once per frame
@@ -21,6 +24,12 @@ public class DetectCollision : MonoBehaviour {
 
         if (tag == "pick_me") {
             Destroy(collision.collider.gameObject);
+            score++;
+            nbCoinsCollectedPerLevel++;
+            if (SceneManager.GetActiveScene().name == "level1" && nbCoinsCollectedPerLevel >= 5) {
+                SceneManager.LoadScene("level2");
+    		}
+            print("score" + score);
         }
 
         if (tag == "avoid_me") {
