@@ -8,6 +8,7 @@ TagManager:
   - avoid_me
   - reStarter
   - endOfLevelTwo
+  - player_ui
   layers:
   - Default
   - TransparentFX
