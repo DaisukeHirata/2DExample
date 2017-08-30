@@ -6,6 +6,8 @@ TagManager:
   tags:
   - pick_me
   - avoid_me
+  - reStarter
+  - endOfLevelTwo
   layers:
   - Default
   - TransparentFX
