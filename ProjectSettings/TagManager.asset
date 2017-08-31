@@ -9,6 +9,7 @@ TagManager:
   - reStarter
   - endOfLevelTwo
   - player_ui
+  - moving_platform
   layers:
   - Default
   - TransparentFX

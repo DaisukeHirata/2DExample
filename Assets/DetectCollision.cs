@@ -8,6 +8,7 @@ public class DetectCollision : MonoBehaviour {
 
     public AudioClip collect, hurt;
 
+    bool isOnMovingPlatform = false;
     int nbCoinsCollectedPerLevel;
 
 	// Use this for initialization
@@ -55,7 +56,20 @@ public class DetectCollision : MonoBehaviour {
             SceneManager.LoadScene("win");
         }
 
+        if (tag == "moving_platform") {
+            transform.parent = collision.gameObject.transform;
+            isOnMovingPlatform = true;
+        }
+
         updateUI();
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (isOnMovingPlatform) {
+            transform.parent = null;
+            isOnMovingPlatform = false;
+        }
     }
 
     void updateUI()
