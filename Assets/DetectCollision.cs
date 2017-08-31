@@ -8,8 +8,6 @@ public class DetectCollision : MonoBehaviour {
 
     public AudioClip collect, hurt;
 
-    int score;
-    int nbLives;
     int nbCoinsCollectedPerLevel;
 
 	// Use this for initialization
@@ -36,7 +34,7 @@ public class DetectCollision : MonoBehaviour {
             Destroy(collision.collider.gameObject);
             GetComponent<AudioSource>().clip = collect;
 			GetComponent<AudioSource>().Play();
-            score = PlayerPrefs.GetInt("score");
+            int score = PlayerPrefs.GetInt("score");
             score++;
             PlayerPrefs.SetInt("score", score);
             nbCoinsCollectedPerLevel++;
@@ -50,14 +48,7 @@ public class DetectCollision : MonoBehaviour {
             Destroy(collision.collider.gameObject);
             GetComponent<AudioSource>().clip = hurt;
 			GetComponent<AudioSource>().Play();
-			nbLives = PlayerPrefs.GetInt("nbLives");
-            nbLives--;
-            PlayerPrefs.SetInt("nbLives", nbLives);
-            if (nbLives >= 0)
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            else
-                SceneManager.LoadScene("lose");
-            print("lives" + nbLives);
+            DecreaseLives();
         }
 
         if (tag == "endOfLevelTwo") {
@@ -69,9 +60,21 @@ public class DetectCollision : MonoBehaviour {
 
     void updateUI()
     {
-		score = PlayerPrefs.GetInt("score");
-		nbLives = PlayerPrefs.GetInt("nbLives");
+		int score = PlayerPrefs.GetInt("score");
+		int nbLives = PlayerPrefs.GetInt("nbLives");
         GameObject.Find("scoreUI").GetComponent<Text>().text = "Score:" + score;
         GameObject.Find("livesUI").GetComponent<Text>().text = "Lives:" + nbLives;
+	}
+
+    public void DecreaseLives() 
+    {
+		int nbLives = PlayerPrefs.GetInt("nbLives");
+		nbLives--;
+		PlayerPrefs.SetInt("nbLives", nbLives);
+		if (nbLives >= 0)
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		else
+			SceneManager.LoadScene("lose");
+		print("lives" + nbLives);
 	}
 }

@@ -16,6 +16,7 @@ public class ControlButtons : MonoBehaviour
         if (currentScene == "win" || currentScene == "lose") {
             GameObject.Find("scoreUI").GetComponent<Text>().text = "";
 			GameObject.Find("livesUI").GetComponent<Text>().text = "";
+			GameObject.Find("timerUI").GetComponent<Text>().text = "";
 		}
     }
 
