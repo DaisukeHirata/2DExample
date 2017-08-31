@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class DetectCollision : MonoBehaviour {
 
+    public AudioClip collect, hurt;
+
     int score;
     int nbLives;
     int nbCoinsCollectedPerLevel;
@@ -18,8 +20,13 @@ public class DetectCollision : MonoBehaviour {
 	
 	// Update is called once per frame
     void Update () {
-        
-    }
+		if (Input.GetKeyDown(KeyCode.M))
+		{
+			GetComponent<AudioSource>().mute = !GetComponent<AudioSource>().mute;
+            GameObject rainbows = GameObject.Find("Rainbows");
+            rainbows.GetComponent<AudioSource>().mute = !rainbows.GetComponent<AudioSource>().mute;
+		}
+	}
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -27,6 +34,8 @@ public class DetectCollision : MonoBehaviour {
 
         if (tag == "pick_me") {
             Destroy(collision.collider.gameObject);
+            GetComponent<AudioSource>().clip = collect;
+			GetComponent<AudioSource>().Play();
             score = PlayerPrefs.GetInt("score");
             score++;
             PlayerPrefs.SetInt("score", score);
@@ -39,7 +48,9 @@ public class DetectCollision : MonoBehaviour {
 
         if (tag == "avoid_me" || tag == "reStarter") {
             Destroy(collision.collider.gameObject);
-            nbLives = PlayerPrefs.GetInt("nbLives");
+            GetComponent<AudioSource>().clip = hurt;
+			GetComponent<AudioSource>().Play();
+			nbLives = PlayerPrefs.GetInt("nbLives");
             nbLives--;
             PlayerPrefs.SetInt("nbLives", nbLives);
             if (nbLives >= 0)
