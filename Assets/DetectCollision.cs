@@ -31,21 +31,7 @@ public class DetectCollision : MonoBehaviour {
     {
         string tag = collision.collider.gameObject.tag;
 
-        if (tag == "pick_me") {
-            Destroy(collision.collider.gameObject);
-            GetComponent<AudioSource>().clip = collect;
-			GetComponent<AudioSource>().Play();
-            int score = PlayerPrefs.GetInt("score");
-            score++;
-            PlayerPrefs.SetInt("score", score);
-            nbCoinsCollectedPerLevel++;
-            if (SceneManager.GetActiveScene().name == "level1" && nbCoinsCollectedPerLevel >= 5) {
-                SceneManager.LoadScene("level2");
-    		}
-            print("score" + score);
-        }
-
-        if (tag == "avoid_me" || tag == "reStarter") {
+		if (tag == "avoid_me" || tag == "reStarter") {
             Destroy(collision.collider.gameObject);
             GetComponent<AudioSource>().clip = hurt;
 			GetComponent<AudioSource>().Play();
@@ -53,10 +39,16 @@ public class DetectCollision : MonoBehaviour {
         }
 
         if (tag == "endOfLevelTwo") {
-            SceneManager.LoadScene("win");
+            SceneManager.LoadScene("level3");
         }
 
-        if (tag == "moving_platform") {
+		if (tag == "endOfLevelThree")
+		{
+			SceneManager.LoadScene("win");
+		}
+
+
+		if (tag == "moving_platform") {
             transform.parent = collision.gameObject.transform;
             isOnMovingPlatform = true;
         }
@@ -74,7 +66,26 @@ public class DetectCollision : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "magic_door_entrance") {
+        string tag = collision.GetComponent<CircleCollider2D>().gameObject.tag;
+
+		if (tag == "pick_me")
+		{
+            Destroy(collision.GetComponent<CircleCollider2D>().gameObject);
+			GetComponent<AudioSource>().clip = collect;
+			GetComponent<AudioSource>().Play();
+			int score = PlayerPrefs.GetInt("score");
+			score++;
+			PlayerPrefs.SetInt("score", score);
+			nbCoinsCollectedPerLevel++;
+			if (SceneManager.GetActiveScene().name == "level1" && nbCoinsCollectedPerLevel >= 5)
+			{
+				SceneManager.LoadScene("level2");
+			}
+			print("score" + score);
+		}
+
+
+		if (collision.gameObject.name == "magic_door_entrance") {
             transform.position = GameObject.Find("magic_door_exit").transform.position;
         }
     }

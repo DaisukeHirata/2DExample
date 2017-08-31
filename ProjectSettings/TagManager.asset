@@ -10,6 +10,7 @@ TagManager:
   - endOfLevelTwo
   - player_ui
   - moving_platform
+  - endOfLevelThree
   layers:
   - Default
   - TransparentFX
