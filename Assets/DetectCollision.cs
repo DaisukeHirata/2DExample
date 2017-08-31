@@ -72,6 +72,13 @@ public class DetectCollision : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "magic_door_entrance") {
+            transform.position = GameObject.Find("magic_door_exit").transform.position;
+        }
+    }
+
     void updateUI()
     {
 		int score = PlayerPrefs.GetInt("score");
